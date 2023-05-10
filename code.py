@@ -1,7 +1,8 @@
-
+import random
 import time
 import board
 import terminalio
+from colors import colors
 from adafruit_matrixportal.matrixportal import MatrixPortal
 
 def main() -> None:
@@ -20,11 +21,9 @@ def main() -> None:
     color_name = list(colors.keys())[color_index]
     color_value = colors[color_name]
 
-
-
-
     minutes = 40
     hours = 3
+    
     while True:
         matrixportal.set_text(f"{hours:02d}:{minutes:02d}")
 

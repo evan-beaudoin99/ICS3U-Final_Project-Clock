@@ -4,32 +4,45 @@ import board
 import terminalio
 from adafruit_matrixportal.matrixportal import MatrixPortal
 
-# --- Display setup ---
-matrixportal = MatrixPortal(status_neopixel=board.NEOPIXEL, debug=True)
+def main() -> None:
 
-# Create a new label with the color and text selected
-matrixportal.add_text(
-    text_font=terminalio.FONT,
-    text_position=(3, (matrixportal.graphics.display.height // 2) - 1),
-    scrolling=False,
-    text_scale = 2
-)
+    matrixportal = MatrixPortal(status_neopixel=board.NEOPIXEL, debug=True)
+
+    matrixportal.add_text(
+        text_font=terminalio.FONT,
+        text_position=(3, (matrixportal.graphics.display.height // 2) - 1),
+        scrolling=False,
+        text_scale = 2
+    )
+
+    color_index = random.randint(0, len(colors) - 1)
+
+    color_name = list(colors.keys())[color_index]
+    color_value = colors[color_name]
 
 
-seconds = 0
-minutes = 30
-hours = 8
 
-while True:
-    matrixportal.set_text(f"{hours:02d}:{minutes:02d}:{seconds:02d}")
-    # matrixportal.set_text_color(content['color'])
-    seconds += 1
-    if seconds == 60:
+
+    minutes = 40
+    hours = 3
+    while True:
+        matrixportal.set_text(f"{hours:02d}:{minutes:02d}")
+
+        color_index = random.randint(0, len(colors) - 1)
+        color_name = list(colors.keys())[color_index]
+        color_value = colors[color_name]
+
+        matrixportal.set_text_color(color_value)
+
         minutes += 1
-        seconds = 0
+        if minutes == 60:
+            hours +=1
+            minutes = 0
 
-    if minutes == 60:
-        hours = 1
-        minutes = 0
+        if hours == 24:
+            hours = 0
 
-    time.sleep(1)
+        time.sleep(1)
+
+if __name__ == "__main__":
+    main()

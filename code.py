@@ -1,3 +1,4 @@
+
 import time
 import board
 import terminalio
@@ -9,23 +10,26 @@ matrixportal = MatrixPortal(status_neopixel=board.NEOPIXEL, debug=True)
 # Create a new label with the color and text selected
 matrixportal.add_text(
     text_font=terminalio.FONT,
-    text_position=(0, (matrixportal.graphics.display.height // 2) - 1),
-    scrolling=True,
+    text_position=(3, (matrixportal.graphics.display.height // 2) - 1),
+    scrolling=False,
+    text_scale = 2
 )
 
-SCROLL_DELAY = 0.03
 
-contents = [
-    { 'text': 'THIS IS RED',  'color': '#cf2727'},
-    { 'text': 'THIS IS BLUE', 'color': '#0846e4'},
-]
+seconds = 0
+minutes = 30
+hours = 8
 
 while True:
-    for content in contents:
-        matrixportal.set_text(content['text'])
+    matrixportal.set_text(f"{hours:02d}:{minutes:02d}:{seconds:02d}")
+    # matrixportal.set_text_color(content['color'])
+    seconds += 1
+    if seconds == 60:
+        minutes += 1
+        seconds = 0
 
-        # Set the text color
-        matrixportal.set_text_color(content['color'])
+    if minutes == 60:
+        hours = 1
+        minutes = 0
 
-        # Scroll it
-        matrixportal.scroll_text(SCROLL_DELAY)
+    time.sleep(1)

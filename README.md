@@ -5,3 +5,9 @@ https://docs.circuitpython.org/projects/matrixportal/en/latest/
 
 API for time:
 http://worldtimeapi.org/api/timezone/America/Toronto
+
+Connect to internet code:
+https://learn.adafruit.com/adafruit-matrixportal-m4/internet-connect
+
+IDE:
+https://mr-coxall.github.io/CircuitPython-IDE/

@@ -4,20 +4,14 @@ from digitalio import DigitalInOut
 import adafruit_requests as requests
 import adafruit_esp32spi.adafruit_esp32spi_socket as socket
 from adafruit_esp32spi import adafruit_esp32spi
+from secrets import secrets
+
 
 def get_time():
-    # Get wifi details and more from a secrets.py file
-    try:
-        from secrets import secrets
-    except ImportError:
-        print("WiFi secrets are kept in secrets.py, please add them there!")
-        raise
-    
+    # This funcion gets the time
     print("ESP32 SPI webclient test")
     
-    TEXT_URL = "http://wifitest.adafruit.com/testwifi/index.html"
     JSON_URL = "http://worldtimeapi.org/api/timezone/America/Toronto"
-    
     
     # If you are using a board with pre-defined ESP32 Pins:
     esp32_cs = DigitalInOut(board.ESP_CS)
@@ -39,11 +33,11 @@ def get_time():
     
     print()
     print("Fetching json from", JSON_URL)
-    r = requests.get(JSON_URL)
-    data = r.json()
+    response = requests.get(JSON_URL)
+    data = response.json()
     current_time = data["datetime"].split("T")[1][:8] # extract time portion
     # print(current_time)
-    r.close()
+    response.close()
     
     return current_time
     

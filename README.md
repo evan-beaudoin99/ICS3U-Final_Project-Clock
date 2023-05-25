@@ -11,3 +11,6 @@ https://learn.adafruit.com/adafruit-matrixportal-m4/internet-connect
 
 IDE:
 https://mr-coxall.github.io/CircuitPython-IDE/
+
+ESP_BUSY
+https://github.com/adafruit/Adafruit_CircuitPython_ESP32SPI/issues/133

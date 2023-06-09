@@ -4,6 +4,7 @@ import terminalio
 from adafruit_matrixportal.matrixportal import MatrixPortal
 from colors import colors
 import random
+import supervisor
 
 
 # Set up where we'll be fetching data from
@@ -11,51 +12,55 @@ DATA_SOURCE = "http://worldtimeapi.org/api/timezone/America/Toronto"
 DATA_LOCATION = ["datetime"]
 
 matrixportal = MatrixPortal(
-        url=DATA_SOURCE,
-        json_path=DATA_LOCATION,
-        status_neopixel=board.NEOPIXEL,
-    )
-    
+    url=DATA_SOURCE,
+    json_path=DATA_LOCATION,
+    status_neopixel=board.NEOPIXEL,
+)
+
+# Text label for clock text
 matrixportal.add_text(
     text_font=terminalio.FONT,
     text_position=(3, 16),
     scrolling=False,
     text_scale = 2
-
 )
 
+# Text label for scrolling message
 matrixportal.add_text(
     text_font=terminalio.FONT,
     text_position=(0, (matrixportal.graphics.display.height // 2) - 1),
     scrolling=True,
     text_scale = 2
-
 )
 
 def get_current_time():
+    """
+    The get_current_time() function gets the current time
+    from a time API and returns the datetime.
+    """
     try:
-        value = matrixportal.fetch()
-        print("Response is", value)
+        current_time = matrixportal.fetch()
+        print("Response is", current_time)
         last_check = time.monotonic()
     except (ValueError, RuntimeError) as e:
         print("Some error occurred, retrying! -", e)
     
-    return value
+    return current_time
     
 def main() -> None:
+    # The main() function runs the clock
     
-    SCROLL_DELAY = 0.02
     
-    # PERIOD_END_TIMES = []
-    
+    # Declaring constants
+    SCROLL_DELAY = 0.08
+
     CONTENTS = [
         { 'text': 'Class is over!',  'color': '#cf2727'},
         { 'text': 'Do not be Late!', 'color': '#0846e4'},
         { 'text': 'Goodbye!', 'color': '#7fffd4'}
     ]
     
-    
-    period_end_times = {
+    PERIOD_END_TIMES = {
         "Period one": {
             "hour": 9,
             "minute": 18
@@ -74,27 +79,28 @@ def main() -> None:
         }
     }
     
-    
+    # Declare variables
+    ticks = 0
     current_time = get_current_time()
     
     date_time = current_time.split("T")[1].split(":")
         
     hours = int(date_time[0])
     minutes = int(date_time[1])
-    seconds = int(date_time[2].split(".", 1)[0])  # Extract seconds and remove the fractional part if present
     
-    
-    # print("Hour:", hours)
-    # print("Minute:", minutes)
-    # print("Seconds:", seconds)
+    # Extract seconds and remove the fractional part if present
+    seconds = int(date_time[2].split(".", 1)[0])  
     
     matrixportal.set_text("ICS3U")
     
+    # This code will wait to display the clock until
+    # the next minute passes
     slide = 60 - seconds 
     time.sleep(slide)
     minutes +=1
     
     while True:
+        # This is the main loop
       
         if minutes == 60:
             hours +=1
@@ -113,13 +119,13 @@ def main() -> None:
     
         matrixportal.set_text_color(color_value)
         
-          
-        for period, end_time in period_end_times.items():
+        # Loops through the period end time dictionary and 
+        # checks if the current time equals the period end time
+        # to display message
+        for period, end_time in PERIOD_END_TIMES.items():
             if end_time["hour"] == hours and end_time["minute"] == minutes:
                 for content in CONTENTS:
-                    
-                    matrixportal.set_text_color("#000000")
-    
+                    matrixportal.set_text_color("#000000") # clears background text
     
                     matrixportal.set_text(content['text'], 1)
                     matrixportal.set_text_color(content['color'], 1)
@@ -127,12 +133,17 @@ def main() -> None:
                     matrixportal.scroll_text(SCROLL_DELAY)
                     
         matrixportal.set_text_color(color_value)
+        
+        if ticks == 180:
+            ticks = 0
+            supervisor.reload()
 
     
+        # Update minutes every minute
         time.sleep(60)
-        
         minutes += 1
-        
+        ticks += 1
+        print(ticks)
 
 if __name__ == "__main__":
     main()

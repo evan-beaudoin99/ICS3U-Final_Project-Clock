@@ -62,20 +62,20 @@ def main() -> None:
     
     PERIOD_END_TIMES = {
         "Period one": {
-            "hour": 9,
-            "minute": 18
+            "hour": 10,
+            "minute": 5
         },
         "Period two": {
-            "hour": 9,
-            "minute": 16
+            "hour": 11,
+            "minute": 25
         },
         "Period three": {
-            "hour": 9,
-            "minute": 14
+            "hour": 13,
+            "minute": 30
         },
         "Period four": {
-            "hour": 9,
-            "minute": 12
+            "hour": 14,
+            "minute": 50
         }
     }
     
@@ -140,10 +140,10 @@ def main() -> None:
 
     
         # Update minutes every minute
-        time.sleep(60)
         minutes += 1
         ticks += 1
-        print(ticks)
+        time.sleep(59.7)
+        
 
 if __name__ == "__main__":
     main()

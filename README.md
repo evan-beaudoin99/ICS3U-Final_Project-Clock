@@ -14,3 +14,7 @@ https://mr-coxall.github.io/CircuitPython-IDE/
 
 ESP_BUSY
 https://github.com/adafruit/Adafruit_CircuitPython_ESP32SPI/issues/133
+
+Tinkercad
+https://www.tinkercad.com/things/0aYyJJ1dMjP
+https://www.tinkercad.com/things/8NQOXMV71Pg

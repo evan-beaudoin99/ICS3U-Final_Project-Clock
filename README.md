@@ -1,5 +1,7 @@
 # ICS3U-Final_Project-Clock
 
+Current Version 7
+
 Documentation for Matrix Portal M4:
 https://docs.circuitpython.org/projects/matrixportal/en/latest/
 
@@ -12,9 +14,6 @@ https://learn.adafruit.com/adafruit-matrixportal-m4/internet-connect
 IDE:
 https://mr-coxall.github.io/CircuitPython-IDE/
 
-ESP_BUSY
-https://github.com/adafruit/Adafruit_CircuitPython_ESP32SPI/issues/133
-
 Tinkercad
-https://www.tinkercad.com/things/0aYyJJ1dMjP
-https://www.tinkercad.com/things/8NQOXMV71Pg
+https://www.tinkercad.com/things/6Hyms9ckZMO
+https://www.tinkercad.com/things/iVhIULEzQV6

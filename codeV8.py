@@ -47,6 +47,8 @@ def get_current_time():
     
     return current_time
     
+    
+    
 def main() -> None:
     # The main() function runs the clock
     matrixportal.set_text("Go...")
@@ -56,17 +58,26 @@ def main() -> None:
     SCROLL_DELAY = 0.03
     
     # Declare variables
-    delay_time = 59.9
+    # minute_time = 60
 
     CONTENTS = [
         { 'text': 'Warning!',  'color': '#cf2727'},
         { 'text': 'Class is almost over!', 'color': '#0846e4'},
     ]
     
+    # pixel_delay = 300*SCROLL_DELAY
+    # delay_time = minute_time - pixel_delay
+    minute_time = 60
+    elapsed_time = 0
+    delay_time = 0
+    start_time = 0
+    end_time = 0
+   
+    
     PERIOD_END_TIMES = {
         "Period one": {
             "hour": 10,
-            "minute": 4
+            "minute": 40
         },
         "Period two": {
             "hour": 11,
@@ -124,15 +135,26 @@ def main() -> None:
         # Loops through the period end time dictionary and 
         # checks if the current time equals the period end time
         # to display message
+     
         for period, end_time in PERIOD_END_TIMES.items():
             if end_time["hour"] == hours and end_time["minute"] == minutes:
                 for content in CONTENTS:
+                    start_time = time.monotonic()
+
                     matrixportal.set_text_color("#000000") # clears background text
     
                     matrixportal.set_text(content['text'], 1)
                     matrixportal.set_text_color(content['color'], 1)
             
                     matrixportal.scroll_text(SCROLL_DELAY)
+                    end_time = time.monotonic()
+                    
+                    elapsed_time = end_time - start_time + 4
+                    print(elapsed_time)
+                    
+        delay_time = minute_time - elapsed_time
+        print(delay_time)
+
                     
         matrixportal.set_text_color(color_value)
         

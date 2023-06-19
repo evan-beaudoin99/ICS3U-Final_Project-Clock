@@ -47,8 +47,6 @@ def get_current_time():
     
     return current_time
     
-    
-    
 def main() -> None:
     # The main() function runs the clock
     matrixportal.set_text("Go...")
@@ -56,28 +54,16 @@ def main() -> None:
     
     # Declaring constants
     SCROLL_DELAY = 0.03
-    
-    # Declare variables
-    # minute_time = 60
 
     CONTENTS = [
         { 'text': 'Warning!',  'color': '#cf2727'},
         { 'text': 'Class is almost over!', 'color': '#0846e4'},
     ]
     
-    # pixel_delay = 300*SCROLL_DELAY
-    # delay_time = minute_time - pixel_delay
-    minute_time = 60
-    elapsed_time = 0
-    delay_time = 0
-    start_time = 0
-    end_time = 0
-   
-    
     PERIOD_END_TIMES = {
         "Period one": {
-            "hour": 10,
-            "minute": 40
+            "hour": 9,
+            "minute": 19
         },
         "Period two": {
             "hour": 11,
@@ -93,6 +79,15 @@ def main() -> None:
         }
     }
     
+    # Declare variables
+    ticks = 0
+    minute_time = 60
+    delay_time = 0
+    elapsed_scrolling_time = 0
+    end_time = 0
+    start_time = 0
+
+
     
     current_time = get_current_time()
     
@@ -113,6 +108,8 @@ def main() -> None:
     minutes +=1
     
     while True:
+        delay_time = 59.8
+
         # This is the main loop
       
         if minutes == 60:
@@ -135,35 +132,40 @@ def main() -> None:
         # Loops through the period end time dictionary and 
         # checks if the current time equals the period end time
         # to display message
-     
         for period, end_time in PERIOD_END_TIMES.items():
             if end_time["hour"] == hours and end_time["minute"] == minutes:
+                
+                start_time = time.monotonic()
+                
                 for content in CONTENTS:
-                    start_time = time.monotonic()
-
                     matrixportal.set_text_color("#000000") # clears background text
     
                     matrixportal.set_text(content['text'], 1)
                     matrixportal.set_text_color(content['color'], 1)
             
                     matrixportal.scroll_text(SCROLL_DELAY)
-                    end_time = time.monotonic()
-                    
-                    elapsed_time = end_time - start_time + 4
-                    print(elapsed_time)
-                    
-        delay_time = minute_time - elapsed_time
-        print(delay_time)
+                
+                end_time = time.monotonic()
+                
+                elapsed_scrolling_time = end_time - start_time
 
+                delay_time = minute_time - elapsed_scrolling_time
+               
+        print(delay_time)
+        print(elapsed_scrolling_time)
+        print(minute_time)
                     
         matrixportal.set_text_color(color_value)
         
-        if hours == 0:
+        # Reload the bard every 5 hours
+        if ticks == 300:
+            ticks = 0
             supervisor.reload()
 
     
         # Update minutes every minute
         minutes += 1
+        ticks += 1
         time.sleep(delay_time)
         
 

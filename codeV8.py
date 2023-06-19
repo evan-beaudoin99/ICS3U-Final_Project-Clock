@@ -62,8 +62,8 @@ def main() -> None:
     
     PERIOD_END_TIMES = {
         "Period one": {
-            "hour": 9,
-            "minute": 19
+            "hour": 10,
+            "minute": 5
         },
         "Period two": {
             "hour": 11,
@@ -108,7 +108,7 @@ def main() -> None:
     minutes +=1
     
     while True:
-        delay_time = 59.8
+        delay_time = 60
 
         # This is the main loop
       

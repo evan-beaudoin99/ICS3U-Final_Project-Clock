@@ -54,6 +54,7 @@ def main() -> None:
     
     # Declaring constants
     SCROLL_DELAY = 0.03
+    ELAPSED_SCROLLING_TIME = 15
 
     CONTENTS = [
         { 'text': 'Warning!',  'color': '#cf2727'},
@@ -62,7 +63,7 @@ def main() -> None:
     
     PERIOD_END_TIMES = {
         "Period one": {
-            "hour": 10,
+            "hour": 9,
             "minute": 4
         },
         "Period two": {
@@ -81,6 +82,10 @@ def main() -> None:
     
     # Declare variables
     ticks = 0
+    minute_time = 60
+    
+    
+    
     current_time = get_current_time()
     
     date_time = current_time.split("T")[1].split(":")
@@ -100,6 +105,8 @@ def main() -> None:
     minutes +=1
     
     while True:
+        delay_time = 60
+
         # This is the main loop
       
         if minutes == 60:
@@ -132,9 +139,17 @@ def main() -> None:
             
                     matrixportal.scroll_text(SCROLL_DELAY)
                     
+                delay_time = minute_time - ELAPSED_SCROLLING_TIME
+                
+        print(delay_time)
+        print(ELAPSED_SCROLLING_TIME)
+        print(minute_time)
+
+                    
         matrixportal.set_text_color(color_value)
         
-        if ticks == 180:
+        # Reload the bard every 5 hours
+        if ticks == 300:
             ticks = 0
             supervisor.reload()
 
@@ -142,7 +157,7 @@ def main() -> None:
         # Update minutes every minute
         minutes += 1
         ticks += 1
-        time.sleep(59.7)
+        time.sleep(delay_time)
         
 
 if __name__ == "__main__":

@@ -1,3 +1,11 @@
+#!/usr/bin/env python3
+
+"""
+Created by: Evan Beaudoin.
+Created on: June 2023
+This module operates the Matrix Portal M4 as a clock
+"""
+
 import time
 import board
 import terminalio

@@ -1,6 +1,6 @@
 # ICS3U-Final_Project-Clock
 
-Current Version 7
+Current Version 8
 
 Documentation for Matrix Portal M4:
 https://docs.circuitpython.org/projects/matrixportal/en/latest/
